@@ -54,6 +54,7 @@
       <velocity_decay/>
       <self_collide>0</self_collide>
     </link>
+
     <link name='plane/imu_link'>
       <pose>0 0 0 0 0 0</pose>
       <inertial>
@@ -69,6 +70,8 @@
         </inertia>
       </inertial>
     </link>
+
+
     <joint name='plane/imu_joint' type='revolute'>
       <child>plane/imu_link</child>
       <parent>base_link</parent>
@@ -87,41 +90,9 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
-    <link name='plane/airspeed_link'>
-      <pose>0 0 0 0 0 0</pose>
-      <inertial>
-        <pose>0 0 0 0 0 0</pose>
-        <mass>0.015</mass>
-        <inertia>
-          <ixx>1e-05</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>1e-05</iyy>
-          <iyz>0</iyz>
-          <izz>1e-05</izz>
-        </inertia>
-      </inertial>
-    </link>
-    <joint name='plane/airspeed_joint' type='revolute'>
-      <child>plane/airspeed_link</child>
-      <parent>base_link</parent>
-      <axis>
-        <xyz>1 0 0</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
-        </limit>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-        </dynamics>
-        <use_parent_model_frame>1</use_parent_model_frame>
-      </axis>
-    </joint>
+
     <link name='rotor_puller'>
-      <pose>0.38 0.005 -0.105 0 1.5707 0</pose>
+       <pose>0.38 0.005 -0.105 0 1.5707 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>0.00005</mass>
@@ -139,7 +110,7 @@
         <geometry>
           <cylinder>
             <length>0.005</length>
-            <radius>0.01</radius>
+            <radius>0.1</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -265,6 +236,7 @@
         </ode>
       </physics>
     </joint>
+
     <joint name='right_elevon_joint' type='revolute'>
       <parent>base_link</parent>
       <child>right_elevon</child>
@@ -330,19 +302,9 @@
         </ode>
       </physics>
     </joint>
-    <include>
-      <uri>model://gps</uri>
-      <pose>0 0 0 0 0 0</pose>
-      <name>gps</name>
-    </include>
-    <joint name='gps_joint' type='fixed'>
-      <child>gps::link</child>
-      <parent>base_link</parent>
-    </joint>
 
 
-<!--
-    <plugin name="left_wing" filename="libLiftDragPlugin.so">
+    <!-- <plugin name="left_wing" filename="libLiftDragPlugin.so">
       <a0>0.05984281113</a0>
       <cla>4.752798721</cla>
       <cda>0.6417112299</cda>
@@ -361,9 +323,9 @@
         left_elevon_joint
       </control_joint_name>
       <control_joint_rad_to_cl>-0.5</control_joint_rad_to_cl>
-    </plugin>
+    </plugin> -->
 
-    <plugin name="right_wing" filename="libLiftDragPlugin.so">
+    <!-- <plugin name="right_wing" filename="libLiftDragPlugin.so">
       <a0>0.05984281113</a0>
       <cla>4.752798721</cla>
       <cda>0.6417112299</cda>
@@ -382,9 +344,9 @@
         right_elevon_joint
       </control_joint_name>
       <control_joint_rad_to_cl>-0.5</control_joint_rad_to_cl>
-    </plugin>
+    </plugin> -->
 
-    <plugin name="elevator" filename="libLiftDragPlugin.so">
+    <!-- <plugin name="elevator" filename="libLiftDragPlugin.so">
       <a0>-0.2</a0>
       <cla>4.752798721</cla>
       <cda>0.6417112299</cda>
@@ -403,9 +365,9 @@
         elevator_joint
       </control_joint_name>
       <control_joint_rad_to_cl>-4.0</control_joint_rad_to_cl>
-    </plugin>
+    </plugin> -->
 
-    <plugin name="rudder" filename="libLiftDragPlugin.so">
+    <!-- <plugin name="rudder" filename="libLiftDragPlugin.so">
       <a0>0.0</a0>
       <cla>4.752798721</cla>
       <cda>0.6417112299</cda>
@@ -420,12 +382,9 @@
       <forward>1 0 0</forward>
       <upward>0 1 0</upward>
       <link_name>base_link</link_name>
-    </plugin>
--->
-
+    </plugin> -->
 
     <plugin name="TEST" filename="libMcFAeroPlugin.so">
-
       <link_name>base_link</link_name>
       <raileron_joint_name>
         right_elevon_joint
@@ -442,7 +401,6 @@
       <motor_joint_name>
         rotor_puller_joint
       </motor_joint_name>
-
     </plugin>
 
 
@@ -462,8 +420,6 @@
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/4</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
-      <robotNamespace></robotNamespace>
-      <windSubTopic>world_wind</windSubTopic>
     </plugin>
 
     <plugin name='gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
@@ -480,31 +436,6 @@
       <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
     </plugin>
 
-    <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
-      <robotNamespace/>
-    </plugin>
-    <!-- <plugin name="gps_plugin" filename="libgazebo_gps_plugin.so">
-        <robotNamespace></robotNamespace>
-        <gpsNoise>true</gpsNoise>
-    </plugin> -->
-    <plugin name='magnetometer_plugin' filename='libgazebo_magnetometer_plugin.so'>
-      <robotNamespace/>
-      <pubRate>100</pubRate>
-      <noiseDensity>0.0004</noiseDensity>
-      <randomWalk>6.4e-06</randomWalk>
-      <biasCorrelationTime>600</biasCorrelationTime>
-      <magTopic>/mag</magTopic>
-    </plugin>
-    <plugin name='barometer_plugin' filename='libgazebo_barometer_plugin.so'>
-      <robotNamespace/>
-      <pubRate>50</pubRate>
-      <baroTopic>/baro</baroTopic>
-    </plugin>
-    <plugin name='airspeed_plugin' filename='libgazebo_airspeed_plugin.so'>
-      <robotNamespace/>
-      <linkName>plane/airspeed_link</linkName>
-    </plugin>
-
     <!-- <plugin name='wind_plugin' filename='libgazebo_wind_plugin.so'>
       <frameId>base_link</frameId>
       <linkName>base_link</linkName>
@@ -518,14 +449,14 @@
       <windGustForceMean>0</windGustForceMean>
     </plugin> -->
 
-    <!-- <plugin name="gps_plugin" filename="libgazebo_gps_plugin.so">
+    <plugin name="gps_plugin" filename="libgazebo_gps_plugin.so">
         <robotNamespace></robotNamespace>
         <gpsNoise>true</gpsNoise>
     </plugin>
 
     <plugin name='magnetometer_plugin' filename='libgazebo_magnetometer_plugin.so'>
       <robotNamespace/>
-      <pubRate>20</pubRate>
+      <pubRate>100</pubRate>
       <noiseDensity>0.0004</noiseDensity>
       <randomWalk>6.4e-06</randomWalk>
       <biasCorrelationTime>600</biasCorrelationTime>
@@ -534,14 +465,14 @@
 
     <plugin name='barometer_plugin' filename='libgazebo_barometer_plugin.so'>
       <robotNamespace/>
-      <pubRate>10</pubRate>
+      <pubRate>50</pubRate>
       <baroTopic>/baro</baroTopic>
-    </plugin> -->
+    </plugin>
 
     <plugin name='mavlink_interface' filename='libgazebo_mavlink_interface.so'>
       <robotNamespace></robotNamespace>
       <imuSubTopic>/imu</imuSubTopic>
-      <!-- <gpsSubTopic>/gps</gpsSubTopic> -->
+      <gpsSubTopic>/gps</gpsSubTopic>
       <magSubTopic>/mag</magSubTopic>
       <baroSubTopic>/baro</baroSubTopic>
       <mavlink_addr>INADDR_ANY</mavlink_addr>
@@ -562,7 +493,7 @@
         <channel name="rotor4">
           <input_index>4</input_index>
           <input_offset>0</input_offset>
-          <input_scaling>6710</input_scaling>
+          <input_scaling>3500</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
           <zero_position_armed>0</zero_position_armed>
           <joint_control_type>velocity</joint_control_type>
@@ -595,18 +526,8 @@
           <joint_control_type>position_kinematic</joint_control_type>
           <joint_name>elevator_joint</joint_name>
         </channel>
-        <channel name="rudder">
-          <input_index>2</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>1</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position_kinematic</joint_control_type>
-          <joint_name>rudder_joint</joint_name>
-        </channel>
       </control_channels>
     </plugin>
-
     <static>0</static>
   </model>
 </sdf>

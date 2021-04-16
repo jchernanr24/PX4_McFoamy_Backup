@@ -223,6 +223,8 @@ inline ignition::math::Pose3d ignitionFromGazeboMath(const gazebo::math::Pose &p
  * ENU to NED: +PI/2 rotation about Z (Up) followed by a +PI rotation about X (old East/new North)
  */
 static const auto q_ng = ignition::math::Quaterniond(0, 0.70711, 0.70711, 0);
+static const auto q_ENU_to_NED = ignition::math::Quaterniond(0, 0.70711, 0.70711, 0);
+static const auto q_FLU_to_FRD = ignition::math::Quaterniond(0, 1, 0, 0);
 
 /**
  * @brief Quaternion for rotation between body FLU and body FRD frames

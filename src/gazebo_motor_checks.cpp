@@ -34,7 +34,7 @@ void GazeboMotorChecks::InitializeParams() {}
 void GazeboMotorChecks::Publish() {
   turning_velocity_msg_.set_data(joint_->GetVelocity(0));
   // FIXME: Commented out to prevent warnings about queue limit reached.
-  // motor_velocity_pub_->Publish(turning_velocity_msg_);
+  motor_velocity_pub_->Publish(turning_velocity_msg_);
 }
 
 void GazeboMotorChecks::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
@@ -117,9 +117,9 @@ void GazeboMotorChecks::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
   else
     gzerr << "[gazebo_motor_checks] Please specify a turning direction ('cw' or 'ccw').\n";
 
-  if(_sdf->HasElement("reversible")) {
-    reversible_ = _sdf->GetElement("reversible")->Get<bool>();
-  }
+  // if(_sdf->HasElement("reversible")) {
+  //   reversible_ = _sdf->GetElement("reversible")->Get<bool>();
+  // }
 
   getSdfParam<std::string>(_sdf, "commandSubTopic", command_sub_topic_, command_sub_topic_);
   getSdfParam<std::string>(_sdf, "motorSpeedPubTopic", motor_speed_pub_topic_,
@@ -153,8 +153,8 @@ void GazeboMotorChecks::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
   //std::cout << "[gazebo_motor_model]: Subscribe to gz topic: "<< motor_failure_sub_topic_ << std::endl;
   motor_failure_sub_ = node_handle_->Subscribe<msgs::Int>(motor_failure_sub_topic_, &GazeboMotorChecks::MotorFailureCallback, this);
   // FIXME: Commented out to prevent warnings about queue limit reached.
-  //motor_velocity_pub_ = node_handle_->Advertise<std_msgs::msgs::Float>("~/" + model_->GetName() + motor_speed_pub_topic_, 1);
-  wind_sub_ = node_handle_->Subscribe("~/" + wind_sub_topic_, &GazeboMotorChecks::WindVelocityCallback, this);
+  motor_velocity_pub_ = node_handle_->Advertise<std_msgs::msgs::Float>("~/" + model_->GetName() + motor_speed_pub_topic_, 1);
+  //wind_sub_ = node_handle_->Subscribe("~/" + wind_sub_topic_, &GazeboMotorChecks::WindVelocityCallback, this);
 
   // Create the first order filter.
   rotor_velocity_filter_.reset(new FirstOrderFilter<double>(time_constant_up_, time_constant_down_, ref_motor_rot_vel_));
@@ -199,10 +199,10 @@ void GazeboMotorChecks::UpdateForcesAndMoments() {
   }
   double real_motor_velocity = motor_rot_vel_ * rotor_velocity_slowdown_sim_;
   double force = real_motor_velocity * std::abs(real_motor_velocity) * motor_constant_;
-  if(!reversible_) {
-    // Not allowed to have negative thrust.
-    force = std::abs(force);
-  }
+  // if(!reversible_) {
+  //   // Not allowed to have negative thrust.
+  //   force = std::abs(force);
+  // }
 
   // scale down force linearly with forward speed
   // XXX this has to be modelled better
@@ -215,7 +215,7 @@ void GazeboMotorChecks::UpdateForcesAndMoments() {
   double vel = body_velocity.Length();
   double scalar = 1 - vel / 25.0; // at 50 m/s the rotor will not produce any force anymore
   scalar = ignition::math::clamp(scalar, 0.0, 1.0);
-  // Apply a force to the link.
+  // Apply a force to the link. JUAN comment out
   // link_->AddRelativeForce(ignition::math::Vector3d(0, 0, force * scalar));
 
   // Forces from Philppe Martin's and Erwan Salaün's
@@ -227,10 +227,13 @@ void GazeboMotorChecks::UpdateForcesAndMoments() {
 #else
   ignition::math::Vector3d joint_axis = ignitionFromGazeboMath(joint_->GetGlobalAxis(0));
 #endif
-  ignition::math::Vector3d relative_wind_velocity = body_velocity - wind_vel_;
-  ignition::math::Vector3d body_velocity_perpendicular = relative_wind_velocity - (relative_wind_velocity.Dot(joint_axis)) * joint_axis;
+  // ignition::math::Vector3d relative_wind_velocity = body_velocity - wind_vel_;
+  // ignition::math::Vector3d body_velocity_perpendicular = relative_wind_velocity - (relative_wind_velocity.Dot(joint_axis)) * joint_axis;
+  // ignition::math::Vector3d air_drag = -std::abs(real_motor_velocity) * rotor_drag_coefficient_ * body_velocity_perpendicular;
+  ignition::math::Vector3d body_velocity_perpendicular = body_velocity - (body_velocity * joint_axis) * joint_axis;
   ignition::math::Vector3d air_drag = -std::abs(real_motor_velocity) * rotor_drag_coefficient_ * body_velocity_perpendicular;
-  // Apply air_drag to link.
+
+  // Apply air_drag to link. JUAN comment out
   // link_->AddForce(air_drag);
   // Moments
   // Getting the parent link, such that the resulting torques can be applied to it.
@@ -244,12 +247,12 @@ void GazeboMotorChecks::UpdateForcesAndMoments() {
   ignition::math::Vector3d drag_torque(0, 0, -turning_direction_ * force * moment_constant_);
   // Transforming the drag torque into the parent frame to handle arbitrary rotor orientations.
   ignition::math::Vector3d drag_torque_parent_frame = pose_difference.Rot().RotateVector(drag_torque);
-  // parent_links.at(0)->AddRelativeTorque(drag_torque_parent_frame);
+  // parent_links.at(0)->AddRelativeTorque(drag_torque_parent_frame); //JUAN Comment out
 
   ignition::math::Vector3d rolling_moment;
   // - \omega * \mu_1 * V_A^{\perp}
   rolling_moment = -std::abs(real_motor_velocity) * rolling_moment_coefficient_ * body_velocity_perpendicular;
-  // parent_links.at(0)->AddTorque(rolling_moment);
+  // parent_links.at(0)->AddTorque(rolling_moment); // JUAN comment out
   // Apply the filter on the motor's velocity.
   double ref_motor_rot_vel;
   ref_motor_rot_vel = rotor_velocity_filter_->updateFilter(ref_motor_rot_vel_, sampling_time_);
@@ -299,11 +302,11 @@ void GazeboMotorChecks::UpdateMotorFail() {
   }
 }
 
-void GazeboMotorChecks::WindVelocityCallback(WindPtr& msg) {
-  wind_vel_ = ignition::math::Vector3d(msg->velocity().x(),
-            msg->velocity().y(),
-            msg->velocity().z());
-}
+// void GazeboMotorChecks::WindVelocityCallback(WindPtr& msg) {
+//   wind_vel_ = ignition::math::Vector3d(msg->velocity().x(),
+//             msg->velocity().y(),
+//             msg->velocity().z());
+// }
 
 GZ_REGISTER_MODEL_PLUGIN(GazeboMotorChecks);
 }
