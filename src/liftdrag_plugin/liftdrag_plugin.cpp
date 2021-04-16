@@ -383,30 +383,30 @@ void LiftDragPlugin::OnUpdate()
   //      this->link->GetName() == "wing_2") &&
   //     (vel.Length() > 50.0 &&
   //      vel.Length() < 50.0))
-  if (0)
+  if (1)
   {
     gzdbg << "=============================\n";
-    gzdbg << "sensor: [" << this->GetHandle() << "]\n";
-    gzdbg << "Link: [" << this->link->GetName()
-          << "] pose: [" << pose
-          << "] dynamic pressure: [" << q << "]\n";
-    gzdbg << "spd: [" << vel.Length()
-          << "] vel: [" << vel << "]\n";
-    gzdbg << "LD plane spd: [" << velInLDPlane.Length()
-          << "] vel : [" << velInLDPlane << "]\n";
-    gzdbg << "forward (inertial): " << forwardI << "\n";
-    gzdbg << "upward (inertial): " << upwardI << "\n";
-    gzdbg << "lift dir (inertial): " << liftI << "\n";
-    gzdbg << "Span direction (normal to LD plane): " << spanwiseI << "\n";
-    gzdbg << "sweep: " << this->sweep << "\n";
-    gzdbg << "alpha: " << this->alpha << "\n";
-    gzdbg << "lift: " << lift << "\n";
-    gzdbg << "drag: " << drag << " cd: "
-          << cd << " cda: " << this->cda << "\n";
-    gzdbg << "moment: " << moment << "\n";
-    gzdbg << "cp momentArm: " << momentArm << "\n";
+    // gzdbg << "sensor: [" << this->GetHandle() << "]\n";
+    // gzdbg << "Link: [" << this->link->GetName()
+    //       << "] pose: [" << pose
+    //       << "] dynamic pressure: [" << q << "]\n";
+    // gzdbg << "spd: [" << vel.Length()
+    //       << "] vel: [" << vel << "]\n";
+    // gzdbg << "LD plane spd: [" << velInLDPlane.Length()
+    //       << "] vel : [" << velInLDPlane << "]\n";
+    // gzdbg << "forward (inertial): " << forwardI << "\n";
+    // gzdbg << "upward (inertial): " << upwardI << "\n";
+    // gzdbg << "lift dir (inertial): " << liftI << "\n";
+    // gzdbg << "Span direction (normal to LD plane): " << spanwiseI << "\n";
+    // gzdbg << "sweep: " << this->sweep << "\n";
+    // gzdbg << "alpha: " << this->alpha << "\n";
+    // gzdbg << "lift: " << lift << "\n";
+    // gzdbg << "drag: " << drag << " cd: "
+    //       << cd << " cda: " << this->cda << "\n";
+    // gzdbg << "moment: " << moment << "\n";
+    // gzdbg << "cp momentArm: " << momentArm << "\n";
     gzdbg << "force: " << force << "\n";
-    gzdbg << "torque: " << torque << "\n";
+    // gzdbg << "torque: " << torque << "\n";
   }
 
   // Correct for nan or inf

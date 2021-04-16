@@ -217,30 +217,28 @@ void McFAeroPlugin::OnUpdate()
   moment_gzb.Correct();
 
 
-  // apply forces at cg (with torques for position shift)
-  this->link->AddForce(force_gzb);
-  this->link->AddTorque(moment_gzb);
 
 
-
-  if (vel_M > 205) //mtr_spd > 0 vel_M > 5
+  if (0) //mtr_spd > 0 vel_M > 5 vel_M > 205
   {
     gzdbg << "=============================\n";
 //     gzdbg << "sensor: [" << this->GetHandle() << "]\n";
-//     gzdbg << "Link: [" << this->link->GetName()
-//           << "]\n" << "Pose: [" << pose << "]\n";
+//     gzdbg << "Link: [" << this->link->GetName() << "]\n" << "Pose: [" << pose << "]\n";
 //
-//     gzdbg << "R_aileron control: [" << this->raileronJoint->Position(0) << "]\n";
-//     gzdbg << "L_aileron control: [" << this->laileronJoint->Position(0) << "]\n";
-//     gzdbg << "Elevator control: [" << this->elevatorJoint->Position(0) << "]\n";
-//     gzdbg << "Rudder control: [" << this->rudderJoint->Position(0) << "]\n";
-// //    gzdbg << "Rotor control: [" << this->motorJoint->GetVelocity(0) << "]\n";
+    // gzdbg << "R_aileron control: [" << this->raileronJoint->Position(0) << "]\n";
+    // gzdbg << "L_aileron control: [" << this->laileronJoint->Position(0) << "]\n";
+    // gzdbg << "Elevator control: [" << this->elevatorJoint->Position(0) << "]\n";
+    gzdbg << "Rudder control: [" << this->rudderJoint->Position(0) << "]\n";
+    // gzdbg << "Rotor control: [" << this->motorJoint->GetVelocity(0) << "]\n";
 // //    gzdbg << "Euler angles: [" << Eul << "]\n";
 //     gzdbg << "Vel_b: [" << vel_cg0_b << "]\n";
 //     gzdbg << "Angular velocity: [" << omega_nb_b << "]\n";
-//     gzdbg << "Forces: [" << Forces_mcf << "]\n";
-//     gzdbg << "Moments: [" << Moments_mcf << "]\n";
-    gzdbg << "Test: [" << mtr_spd << "]\n";
+    // gzdbg << "Forces: [" << Forces_mcf << "]\n";
+    // gzdbg << "Moments: [" << Moments_mcf << "]\n";
+    // gzdbg << "Test: [" << mtr_spd << "]\n";
   }
+  // apply forces at cg (with torques for position shift)
+  this->link->AddForce(force_gzb);
+  this->link->AddTorque(moment_gzb);
 
 }
