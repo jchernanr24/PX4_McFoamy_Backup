@@ -171,8 +171,8 @@ void McFAeroPlugin::OnUpdate()
   //Vector3d Vel_b = V_b-V_w;
 
   Vector3d vel_cg0_b = q_FLU_to_FRD.RotateVector(this->link->RelativeLinearVel());
-  Vector3d vel_wind = Vector3d(0,0,0); //placeholder wind velocity for later
-  Vector3d vel_aspd = vel_cg0_b - vel_wind;
+  Vector3d vel_wind = Vector3d(0,5,0); //placeholder wind velocity for later
+  Vector3d vel_aspd = vel_cg0_b - q_nb.Inverse().RotateVector(vel_wind);
 
   double vel_M = vel_aspd.Length();
   // Testing function
