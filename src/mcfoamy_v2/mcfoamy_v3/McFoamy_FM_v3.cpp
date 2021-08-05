@@ -17,6 +17,16 @@
 #include "rt_defines.h"
 #include <cmath>
 
+
+// real_T rtNaN{std::numeric_limits<real_T>::quiet_NaN()};
+// real_T rtInf{std::numeric_limits<real_T>::infinity()};
+// real_T rtMinusInf{-std::numeric_limits<real_T>::infinity()};
+// real32_T rtNaNF{std::numeric_limits<real32_T>::quiet_NaN()};
+// real32_T rtInfF{std::numeric_limits<real32_T>::infinity()};
+// real32_T rtMinusInfF{-std::numeric_limits<real32_T>::infinity()};
+
+#include "allMethods.hpp"
+
 // Function Declarations
 static double rt_atan2d_snf(double u0, double u1);
 
@@ -85,6 +95,10 @@ void McFoamy_FM_v3(double Ail_def, double Elev_def, double Rud_def,
                    double w_p, double w_q, double w_r,  double *Fx, double *Fy, double *Fz, double *Mx, double *My,
                    double *Mz)
 {
+  Ail_def *= -57.2958;
+  Elev_def *= 57.2958;
+  Rud_def *= 57.2958;
+
   static const double Cts_Geom[154]{
       7.0,   260.41,   152.4,  431.8,  0.0,     0.0,    0.0,
       3.0,   152.73,   139.7,  181.61, 0.0,     0.0,    0.0,
