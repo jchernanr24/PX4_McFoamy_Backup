@@ -9,7 +9,7 @@
 //
 
 // Include Files
-#include "McFoamy_FM_v3.h"
+// #include "McFoamy_FM_v3.h"
 #include "flappedAirfoil_LAR_v1_FlatPlate.h"
 #include "interp2.h"
 #include "rt_nonfinite.h"
@@ -1365,17 +1365,17 @@ void McFoamy_FM_v3(double Ail_def, double Elev_def, double Rud_def,
     vthr_x += CL_ws[i + 1];
     CFy += CL_wp[i + 1];
   }
-  F_total_body[0] =
+  *Fx =
       (((((CMx + CFx) + ((Ctf_idx_0 + Ctf_idx_1) + Ctf_idx_2)) +
          ((vts_xcomp_idx_0 + vts_xcomp_idx_1) + vts_xcomp_idx_2)) +
         (((vB_ycomp[0] + vB_ycomp[1]) + vB_ycomp[2]) + vB_ycomp[3])) +
        (((vr_ycomp[0] + vr_ycomp[1]) + vr_ycomp[2]) + vr_ycomp[3])) +
       F_Thr_idx_0;
-  F_total_body[1] =
+  *Fy =
       ((((CL_r_idx_0 + CL_r_idx_1) + CL_r_idx_2) + vtp_xz_idx_1) +
        (((CL_B_idx_0 + CL_B_idx_1) + CL_B_idx_2) + vts_xz_idx_2)) +
       F_Thr_idx_1;
-  F_total_body[2] =
+  *Fz =
       (((vthr_x + CFy) + ((CL_ts_idx_0 + CL_ts_idx_1) + vts_xz_idx_1)) +
        ((CL_tp_idx_0 + CL_tp_idx_1) + RudDefOut)) +
       F_Thr_idx_2;
@@ -1480,10 +1480,10 @@ void McFoamy_FM_v3(double Ail_def, double Elev_def, double Rud_def,
              vtp_xz_idx_2 * CB_idx_2 * CM_B_idx_2;
   xB_idx_3 = (xB_idx_3 * vts_xz_idx_2 - yB_idx_3 * vr_ycomp[3]) -
              vr_xy_idx_0 * CB_idx_3 * d13;
-  M_total_body[0] =
+  *Mx =
       ((((((CMx + CFx) + vthr_x) + CFy) + ThrRPMOut) + AilDefOut) + MX_thr) +
       (0.0 * F_Thr_idx_2 - -0.0058899999999999994 * F_Thr_idx_1);
-  M_total_body[1] = (((((((ElevDefOut + vtp_xz_idx_0) +
+  *My = (((((((ElevDefOut + vtp_xz_idx_0) +
                           ((CL_ts_idx_0 + CL_ts_idx_1) + vts_xz_idx_1)) +
                          ((zt_idx_0 + zt_idx_1) + zt_idx_2)) +
                         (((zr_idx_0 + zr_idx_1) + zr_idx_2) + zr_idx_3)) +
@@ -1491,7 +1491,7 @@ void McFoamy_FM_v3(double Ail_def, double Elev_def, double Rud_def,
                       MX_thr_tmp * (-CMy * b_CFY_tmp + CMz * CFY_tmp) * 0.5) +
                      W_Thr_SI * 5.0E-5 * -w_r) +
                     (-0.0058899999999999994 * F_Thr_idx_0 - 0.27 * F_Thr_idx_2);
-  M_total_body[2] =
+  *Mz =
       (((((((vthr_z + psiT) + RudDefOut) + ((xt_idx_0 + xt_idx_1) + xt_idx_2)) +
           (((xr_idx_0 + xr_idx_1) + xr_idx_2) + xr_idx_3)) +
          (((xB_idx_0 + xB_idx_1) + xB_idx_2) + xB_idx_3)) +
@@ -1500,12 +1500,12 @@ void McFoamy_FM_v3(double Ail_def, double Elev_def, double Rud_def,
       (0.27 * F_Thr_idx_1 - 0.0 * F_Thr_idx_0);
 
       /* ---- pointers to output ---- */
-      *Fx = F_total_body[0];
-      *Fy = F_total_body[1];
-      *Fz = F_total_body[2];
-      *Mx = M_total_body[0];
-      *My = M_total_body[1];
-      *Mz = M_total_body[2];
+      // *Fx = F_total_body[0];
+      // *Fy = F_total_body[1];
+      // *Fz = F_total_body[2];
+      // *Mx = M_total_body[0];
+      // *My = M_total_body[1];
+      // *Mz = M_total_body[2];
 }
 
 //

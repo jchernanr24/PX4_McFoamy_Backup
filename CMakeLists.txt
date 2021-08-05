@@ -465,8 +465,10 @@ set(plugins
 #if("${GAZEBO_VERSION}" VERSION_LESS "7.0")
   add_library(LiftDragPlugin SHARED src/liftdrag_plugin/liftdrag_plugin.cpp)
   list(APPEND plugins LiftDragPlugin)
+  # add_library(McFAeroPlugin SHARED src/mcfaero_plugin/mcfaero_plugin.cpp
+  #                        src/mcfoamy_v2/McFoamy_FM_v2.cpp)
   add_library(McFAeroPlugin SHARED src/mcfaero_plugin/mcfaero_plugin.cpp
-                         src/mcfoamy_v2/McFoamy_FM_v2.cpp)
+                        src/mcfoamy_v2/mcfoamy_v3/McFoamy_FM_v3.cpp)
   list(APPEND plugins McFAeroPlugin)
 #endif()
 

@@ -17,9 +17,10 @@
 //#include "McFoamy_FM_v2_types.h"
 
 // Function Declarations
-extern void McFoamy_FM_v2(double LAilDef, double ElevDef, double RudDef, double
-  wIn, double u, double v, double w, double p, double q, double r, double *Fx,
-  double *Fy, double *Fz, double *Mx, double *My, double *Mz);
+extern void McFoamy_FM_v2(double Ail_def, double Elev_def, double Rud_def,
+                          double Thr_com, double v_u, double v_v, double v_w,
+                          double w_p, double w_q, double w_r,
+                          double *Fx, double *Fy, double *Fz, double *Mx, double *My, double *Mz);
 //extern void McFoamy_FM_v2_initialize();
 //extern void McFoamy_FM_v2_terminate();
 
