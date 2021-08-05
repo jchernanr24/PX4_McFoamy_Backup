@@ -25,7 +25,8 @@
 #include "gazebo/transport/transport.hh"
 #include "gazebo/msgs/msgs.hh"
 #include "mcfaero_plugin/mcfaero_plugin.h"
-#include "mcfoamy_v2/McFoamy_FM_v2.h"
+// #include "mcfoamy_v2/McFoamy_FM_v2.h"
+#include "mcfoamy_v2/mcfoamy_v3/McFoamy_FM_v3.h" // Tools/sitl_gazebo/src/mcfoamy_v2/mcfoamy_v3/McFoamy_FM_v3.h
 
 using namespace gazebo;
 using namespace ignition::math;
@@ -171,7 +172,7 @@ void McFAeroPlugin::OnUpdate()
   //Vector3d Vel_b = V_b-V_w;
 
   Vector3d vel_cg0_b = q_FLU_to_FRD.RotateVector(this->link->RelativeLinearVel());
-  Vector3d vel_wind = Vector3d(0,5,0); //placeholder wind velocity for later
+  Vector3d vel_wind = Vector3d(-5,0,0); //placeholder wind velocity for later
   Vector3d vel_aspd = vel_cg0_b - q_nb.Inverse().RotateVector(vel_wind);
 
   double vel_M = vel_aspd.Length();
@@ -199,7 +200,9 @@ void McFAeroPlugin::OnUpdate()
   double Mx;
   double My;
   double Mz;
-  McFoamy_FM_v2(LAilDef, ElevDef, RudDef, wIn, u_mcf, v_mcf, w_mcf, p_mcf,
+  // McFoamy_FM_v2(LAilDef, ElevDef, RudDef, wIn, u_mcf, v_mcf, w_mcf, p_mcf,
+  //               q_mcf, r_mcf, &Fx, &Fy, &Fz, &Mx, &My, &Mz);
+  McFoamy_FM_v3(LAilDef, ElevDef, RudDef, wIn, u_mcf, v_mcf, w_mcf, p_mcf,
                 q_mcf, r_mcf, &Fx, &Fy, &Fz, &Mx, &My, &Mz);
 
 
