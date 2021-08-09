@@ -154,9 +154,9 @@ void LiftDragPlugin::Load(physics::ModelPtr _model,
           boost::bind(&LiftDragPlugin::OnUpdate, this));
     }
 
-    
+
   }
-  
+
   if (_sdf->HasElement("robotNamespace"))
   {
     namespace_ = _sdf->GetElement("robotNamespace")->Get<std::string>();
@@ -390,7 +390,7 @@ void LiftDragPlugin::OnUpdate()
   //      this->link->GetName() == "wing_2") &&
   //     (vel.Length() > 50.0 &&
   //      vel.Length() < 50.0))
-  if (0)
+  if (1)
   {
     gzdbg << "=============================\n";
     gzdbg << "sensor: [" << this->GetHandle() << "]\n";

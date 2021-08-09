@@ -95,9 +95,6 @@ void McFoamy_FM_v3(double Ail_def, double Elev_def, double Rud_def,
                    double w_p, double w_q, double w_r,  double *Fx, double *Fy, double *Fz, double *Mx, double *My,
                    double *Mz)
 {
-  Ail_def *= -57.2958;
-  Elev_def *= 57.2958;
-  Rud_def *= 57.2958;
 
   static const double Cts_Geom[154]{
       7.0,   260.41,   152.4,  431.8,  0.0,     0.0,    0.0,

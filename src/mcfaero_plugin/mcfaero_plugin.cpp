@@ -180,14 +180,14 @@ void McFAeroPlugin::OnUpdate()
   //Vector3d Vel_b = V_b-V_w;
 
   Vector3d vel_cg0_b = q_FLU_to_FRD.RotateVector(this->link->RelativeLinearVel());
-  Vector3d vel_wind = Vector3d(-5,0,0); //placeholder wind velocity for later
+  Vector3d vel_wind = Vector3d(0,0,0); //placeholder wind velocity for later
   Vector3d vel_aspd = vel_cg0_b - q_nb.Inverse().RotateVector(vel_wind);
 
   double vel_M = vel_aspd.Length();
   // Testing function
-  double LAilDef = -1 * this->laileronJoint->Position(0);
-  double ElevDef = -1 * this->elevatorJoint->Position(0);
-  double RudDef = -1 * this->rudderJoint->Position(0);
+  double LAilDef = -(52.0/50.0) * (57.2958) * -1.0 * this->laileronJoint->Position(0);
+  double ElevDef = (59.0/45.0) * (57.2958) * -1 * this->elevatorJoint->Position(0);
+  double RudDef = (49.0/44.994) * (57.2958) * -1 * this->rudderJoint->Position(0);
   double mtr_spd = this->motorJoint->GetVelocity(0);
 
   mtr_spd = floorf(10*fabs(mtr_spd));
@@ -220,9 +220,13 @@ void McFAeroPlugin::OnUpdate()
 
 //  Vector3d Forces_mcf = Vector3d(0,0,0);
 //  Vector3d Moments_mcf = Vector3d(0,0,0);
-
+//
   Vector3d force_gzb = q_gb*Forces_mcf;
   Vector3d moment_gzb = q_gb*Moments_mcf;
+
+
+  // Vector3d force_gzb = Forces_mcf;
+  // Vector3d moment_gzb = Moments_mcf;
 
   // Correct for nan or inf
   force_gzb.Correct();
@@ -235,18 +239,31 @@ void McFAeroPlugin::OnUpdate()
   {
     gzdbg << "=============================\n";
     // gzdbg << "sensor: [" << this->GetHandle() << "]\n";
-    // gzdbg << "Link: [" << this->link->GetName() << "]\n" << "Pose: [" << pose << "]\n";
+    gzdbg << "Link: [" << this->link->GetName() << "]\n";
 
-    gzdbg << "R_aileron control: [" << this->raileronJoint->Position(0) << "]\n";
-    gzdbg << "L_aileron control: [" << this->laileronJoint->Position(0) << "]\n";
-    gzdbg << "Elevator control: [" << this->elevatorJoint->Position(0) << "]\n";
-    gzdbg << "Rudder control: [" << this->rudderJoint->Position(0) << "]\n";
-    gzdbg << "Rotor control: [" << this->motorJoint->GetVelocity(0) << "]\n";
+    // gzdbg << "R_aileron control: [" << this->raileronJoint->Position(0) << "]\n";
+    // gzdbg << "L_aileron control: [" << this->laileronJoint->Position(0) << "]\n";
+    // gzdbg << "Elevator control: [" << this->elevatorJoint->Position(0) << "]\n";
+    gzdbg << "Aileron control: [" << LAilDef << " deg]\n";
+    gzdbg << "Elevator control: [" << ElevDef << " deg]\n";
+    gzdbg << "Rudder control: [" << RudDef << " deg]\n";
+    // gzdbg << "Airspeed body x: [" << u_mcf << " m/s]\n";
+    // gzdbg << "Airspeed body y: [" << v_mcf << " m/s]\n";
+    // gzdbg << "Airspeed body z: [" << w_mcf << " m/s]\n";
+    // gzdbg << "Omega body x: [" << p_mcf << " m/s]\n";
+    // gzdbg << "Omega body y: [" << q_mcf << " m/s]\n";
+    // gzdbg << "Omega body z: [" << r_mcf << " m/s]\n";
+    // gzdbg << "Rudder control: [" << this->rudderJoint->Position(0) << "]\n";
+    // gzdbg << "Rotor control: [" << this->motorJoint->GetVelocity(0) << "]\n";
+    gzdbg << "Rotor control: [" << wIn << " rpm]\n";
 //    gzdbg << "Euler angles: [" << Eul << "]\n";
     // gzdbg << "Vel_b: [" << vel_cg0_b << "]\n";
     // gzdbg << "Angular velocity: [" << omega_nb_b << "]\n";
     // gzdbg << "Forces: [" << Forces_mcf << "]\n";
-    gzdbg << "Moments: [" << Moments_mcf << "]\n";
+    // gzdbg << "Moments: [" << Moments_mcf << "]\n";
+    gzdbg << "Forces: [" << force_gzb << "]\n";
+    gzdbg << "Moments: [" << moment_gzb << "]\n";
+    // gzdbg << "Force tot: [" << this->link->GetForce() << "]\n";
     // gzdbg << "Test: [" << mtr_spd << "]\n";
   }
   // apply forces at cg (with torques for position shift)
