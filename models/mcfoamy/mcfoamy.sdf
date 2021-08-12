@@ -6,7 +6,7 @@
       <pose>0 0 0 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>0.38</mass>
+        <mass>0.45</mass>
         <!-- <inertia> -->
           <!-- <ixx>0.197563</ixx>
           <ixy>0</ixy>
@@ -32,16 +32,16 @@
           </box>
         </geometry>
         <surface>
-          <!-- <contact>
+          <contact>
             <ode>
               <max_vel>10</max_vel>
               <min_depth>0.01</min_depth>
             </ode>
-          </contact> -->
+          </contact>
           <friction>
             <ode>
-              <mu>0.0000001</mu>
-              <mu2>0.0000001</mu2>
+              <mu>10</mu>
+              <mu2>10</mu2>
             </ode>
           </friction>
         </surface>
@@ -70,7 +70,7 @@
       <pose>0 0 0 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>0.015</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>1e-05</ixx>
           <ixy>0</ixy>
@@ -106,7 +106,7 @@
        <pose>0.38 0.005 -0.105 0 1.5707 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>0.005</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>9.75e-07</ixx>
           <ixy>0</ixy>
@@ -181,7 +181,7 @@
 
     <link name="left_elevon">
       <inertial>
-        <mass>0.005</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>0.000001</ixx>
           <ixy>0.0</ixy>
@@ -195,7 +195,7 @@
     </link>
     <link name="right_elevon">
       <inertial>
-        <mass>0.005</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>0.000001</ixx>
           <ixy>0.0</ixy>
@@ -209,7 +209,7 @@
     </link>
     <link name="elevator">
       <inertial>
-        <mass>0.005</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>0.000001</ixx>
           <ixy>0.0</ixy>
@@ -223,7 +223,7 @@
     </link>
     <link name="rudder">
       <inertial>
-        <mass>0.005</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>0.000001</ixx>
           <ixy>0.0</ixy>
@@ -244,8 +244,8 @@
         <xyz>0 1 0</xyz>
         <limit>
           <!-- -30/+30 deg. -->
-          <lower>-0.8727</lower>
-          <upper>0.8727</upper>
+          <lower>-0.907571</lower>
+          <upper>0.907571</upper>
         </limit>
         <dynamics>
           <damping>1.000</damping>
@@ -266,8 +266,8 @@
         <xyz>0 1 0</xyz>
         <limit>
           <!-- -30/+30 deg. -->
-          <lower>-0.8727</lower>
-          <upper>0.8727</upper>
+          <lower>-0.907571</lower>
+          <upper>0.907571</upper>
         </limit>
         <dynamics>
           <damping>1.000</damping>
@@ -288,8 +288,8 @@
         <xyz>0 1 0</xyz>
         <limit>
           <!-- -30/+30 deg. -->
-          <lower>-0.7854</lower>
-          <upper>0.7854</upper>
+          <lower>-1.02974</lower>
+          <upper>1.02974</upper>
         </limit>
         <dynamics>
           <damping>1.000</damping>
@@ -310,8 +310,8 @@
         <xyz>1 0 0</xyz>
         <limit>
           <!-- -30/+30 deg. -->
-          <lower>-0.7854</lower>
-          <upper>0.7854</upper>
+          <lower>-0.855211</lower>
+          <upper>0.855211</upper>
         </limit>
         <dynamics>
           <damping>1.000</damping>
@@ -329,7 +329,7 @@
         <pose>0 0 0 0 0 0</pose>
         <inertial>
           <pose>0 0 0 0 0 0</pose>
-          <mass>0.001</mass>
+          <mass>0.0000000033</mass>
           <inertia>
             <ixx>2.1733e-06</ixx>
             <ixy>0</ixy>
@@ -427,39 +427,39 @@
 
     <plugin name='magnetometer_plugin' filename='libgazebo_magnetometer_plugin.so'>
       <robotNamespace/>
-      <pubRate>100</pubRate>
+      <pubRate>400</pubRate>
       <noiseDensity>0.0004</noiseDensity>
       <randomWalk>6.4e-06</randomWalk>
       <biasCorrelationTime>600</biasCorrelationTime>
       <magTopic>/mag</magTopic>
     </plugin>
 
-    <!-- <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
+    <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
       <robotNamespace/>
-    </plugin> -->
+    </plugin>
 
     <plugin name='barometer_plugin' filename='libgazebo_barometer_plugin.so'>
       <robotNamespace/>
-      <pubRate>50</pubRate>
+      <pubRate>200</pubRate>
       <baroTopic>/baro</baroTopic>
     </plugin>
 
     <plugin name='mavlink_interface' filename='libgazebo_mavlink_interface.so'>
       <robotNamespace></robotNamespace>
       <imuSubTopic>/imu</imuSubTopic>
-      <gpsSubTopic>/gps</gpsSubTopic>
       <magSubTopic>/mag</magSubTopic>
       <baroSubTopic>/baro</baroSubTopic>
       <mavlink_addr>INADDR_ANY</mavlink_addr>
+      <mavlink_tcp_port>4560</mavlink_tcp_port>
       <mavlink_udp_port>14560</mavlink_udp_port>
-      <serialEnabled>false</serialEnabled>
+      <serialEnabled>0</serialEnabled>
       <serialDevice>/dev/ttyACM0</serialDevice>
       <baudRate>921600</baudRate>
       <qgc_addr>INADDR_ANY</qgc_addr>
       <qgc_udp_port>14550</qgc_udp_port>
       <sdk_addr>INADDR_ANY</sdk_addr>
       <sdk_udp_port>14540</sdk_udp_port>
-      <hil_mode>false</hil_mode>
+      <hil_mode>0</hil_mode>
       <hil_state_level>false</hil_state_level>
       <enable_lockstep>true</enable_lockstep>
       <use_tcp>true</use_tcp>

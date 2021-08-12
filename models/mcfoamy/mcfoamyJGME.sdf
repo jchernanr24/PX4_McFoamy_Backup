@@ -66,7 +66,7 @@
       <pose>0 0 0 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>0.0015</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>1e-05</ixx>
           <ixy>0</ixy>
@@ -108,7 +108,7 @@
       <pose>0.38 0.005 -0.105 0.0 1.5707 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>0.000005</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>9.75e-09</ixx>
           <ixy>0</ixy>
@@ -157,7 +157,7 @@
 
     <link name="left_elevon">
       <inertial>
-        <mass>0.00005</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>0.0000000000004</ixx>
           <ixy>0.0</ixy>
@@ -186,7 +186,7 @@
     </link>
     <link name="right_elevon">
       <inertial>
-        <mass>0.00005</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>0.00000000000004</ixx>
           <ixy>0.0</ixy>
@@ -215,7 +215,7 @@
     </link>
     <link name="elevator">
       <inertial>
-        <mass>0.00005</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>0.0000000000004</ixx>
           <ixy>0.0</ixy>
@@ -244,7 +244,7 @@
     </link>
     <link name="rudder">
       <inertial>
-        <mass>0.00005</mass>
+        <mass>0.0000000033</mass>
         <inertia>
           <ixx>0.0000000000004</ixx>
           <ixy>0.0</ixy>
@@ -374,7 +374,7 @@
         <pose>0 0 0 0 0 0</pose>
         <inertial>
           <pose>0 0 0 0 0 0</pose>
-          <mass>0.001</mass>
+          <mass>0.0000000033</mass>
           <inertia>
             <ixx>2.1733e-06</ixx>
             <ixy>0</ixy>

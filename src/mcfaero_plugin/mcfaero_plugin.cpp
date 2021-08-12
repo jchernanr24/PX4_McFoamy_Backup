@@ -180,14 +180,14 @@ void McFAeroPlugin::OnUpdate()
   //Vector3d Vel_b = V_b-V_w;
 
   Vector3d vel_cg0_b = q_FLU_to_FRD.RotateVector(this->link->RelativeLinearVel());
-  Vector3d vel_wind = Vector3d(0,0,0); //placeholder wind velocity for later
+  Vector3d vel_wind = Vector3d(0.0,0,0); //placeholder wind velocity for later
   Vector3d vel_aspd = vel_cg0_b - q_nb.Inverse().RotateVector(vel_wind);
 
   double vel_M = vel_aspd.Length();
   // Testing function
-  double LAilDef = -(52.0/50.0) * (57.2958) * -1.0 * this->laileronJoint->Position(0);
-  double ElevDef = (59.0/45.0) * (57.2958) * -1 * this->elevatorJoint->Position(0);
-  double RudDef = (49.0/44.994) * (57.2958) * -1 * this->rudderJoint->Position(0);
+  double LAilDef = -(57.2958) * -1.0 * this->laileronJoint->Position(0);
+  double ElevDef = (57.2958) * -1.0 * this->elevatorJoint->Position(0);
+  double RudDef = (57.2958) * -1.0 * this->rudderJoint->Position(0);
   double mtr_spd = this->motorJoint->GetVelocity(0);
 
   mtr_spd = floorf(10*fabs(mtr_spd));
@@ -232,14 +232,14 @@ void McFAeroPlugin::OnUpdate()
   force_gzb.Correct();
   moment_gzb.Correct();
 
-
-
+  this->link->AddForce(force_gzb);
+  this->link->AddTorque(moment_gzb);
 
   if (false) //mtr_spd > 0 vel_M > 5 vel_M > 205
   {
     gzdbg << "=============================\n";
     // gzdbg << "sensor: [" << this->GetHandle() << "]\n";
-    gzdbg << "Link: [" << this->link->GetName() << "]\n";
+    // gzdbg << "Link: [" << this->link->GetName() << "]\n";
 
     // gzdbg << "R_aileron control: [" << this->raileronJoint->Position(0) << "]\n";
     // gzdbg << "L_aileron control: [" << this->laileronJoint->Position(0) << "]\n";
@@ -255,19 +255,20 @@ void McFAeroPlugin::OnUpdate()
     // gzdbg << "Omega body z: [" << r_mcf << " m/s]\n";
     // gzdbg << "Rudder control: [" << this->rudderJoint->Position(0) << "]\n";
     // gzdbg << "Rotor control: [" << this->motorJoint->GetVelocity(0) << "]\n";
-    gzdbg << "Rotor control: [" << wIn << " rpm]\n";
+    // gzdbg << "Rotor control: [" << wIn << " rpm]\n";
 //    gzdbg << "Euler angles: [" << Eul << "]\n";
     // gzdbg << "Vel_b: [" << vel_cg0_b << "]\n";
     // gzdbg << "Angular velocity: [" << omega_nb_b << "]\n";
     // gzdbg << "Forces: [" << Forces_mcf << "]\n";
     // gzdbg << "Moments: [" << Moments_mcf << "]\n";
-    gzdbg << "Forces: [" << force_gzb << "]\n";
-    gzdbg << "Moments: [" << moment_gzb << "]\n";
+    // gzdbg << "Forces: [" << force_gzb << "]\n";
+    // gzdbg << "Get Force: [" << this->link->RelativeForce() << "]\n";
+    // gzdbg << "Moments: [" << moment_gzb << "]\n";
     // gzdbg << "Force tot: [" << this->link->GetForce() << "]\n";
     // gzdbg << "Test: [" << mtr_spd << "]\n";
   }
   // apply forces at cg (with torques for position shift)
-  this->link->AddForce(force_gzb);
-  this->link->AddTorque(moment_gzb);
+  // this->link->AddForce(force_gzb);
+  // this->link->AddTorque(moment_gzb);
 
 }
