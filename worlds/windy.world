@@ -17,7 +17,7 @@
       <robotNamespace/>
       <xyzOffset>1 0 0</xyzOffset>
       <windDirectionMean>0 1 0</windDirectionMean>
-      <windVelocityMean>4.0</windVelocityMean>
+      <windVelocityMean>0.0</windVelocityMean>
       <windGustDirection>0 0 0</windGustDirection>
       <windGustDuration>0</windGustDuration>
       <windGustStart>0</windGustStart>
@@ -29,7 +29,7 @@
       <ode>
         <solver>
           <type>quick</type>
-          <iters>10</iters>
+          <iters>20</iters>
           <sor>1.3</sor>
           <use_dynamic_moi_rescaling>0</use_dynamic_moi_rescaling>
         </solver>
@@ -40,9 +40,9 @@
           <contact_surface_layer>0.001</contact_surface_layer>
         </constraints>
       </ode>
-      <max_step_size>0.004</max_step_size>
+      <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
-      <real_time_update_rate>250</real_time_update_rate>
+      <real_time_update_rate>1000</real_time_update_rate>
       <magnetic_field>6.0e-6 2.3e-5 -4.2e-5</magnetic_field>
     </physics>
   </world>

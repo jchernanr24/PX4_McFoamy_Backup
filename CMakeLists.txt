@@ -368,6 +368,7 @@ add_library(gazebo_multirotor_base_plugin SHARED src/gazebo_multirotor_base_plug
 add_library(gazebo_wind_plugin SHARED src/gazebo_wind_plugin.cpp)
 add_library(gazebo_magnetometer_plugin SHARED src/gazebo_magnetometer_plugin.cpp src/geo_mag_declination.cpp)
 add_library(gazebo_barometer_plugin SHARED src/gazebo_barometer_plugin.cpp)
+add_library(gazebo_motor_checks SHARED src/gazebo_motor_checks.cpp)
 add_library(gazebo_catapult_plugin SHARED src/gazebo_catapult_plugin.cpp)
 add_library(gazebo_usv_dynamics_plugin SHARED src/gazebo_usv_dynamics_plugin.cpp)
 add_library(gazebo_parachute_plugin SHARED src/gazebo_parachute_plugin.cpp)
@@ -395,6 +396,7 @@ set(plugins
   gazebo_wind_plugin
   gazebo_magnetometer_plugin
   gazebo_barometer_plugin
+  gazebo_motor_checks
   gazebo_catapult_plugin
   gazebo_usv_dynamics_plugin
   gazebo_parachute_plugin
@@ -469,8 +471,12 @@ set(plugins
   add_library(LiftDragPlugin SHARED src/liftdrag_plugin/liftdrag_plugin.cpp)
   list(APPEND plugins LiftDragPlugin)
 
-  add_library(ForceVisual SHARED src/force_visual/force_visual.cpp)
-  list(APPEND plugins ForceVisual)
+  # add_library(McFAeroPlugin SHARED src/mcfaero_plugin/mcfaero_plugin.cpp
+  #                        src/mcfoamy_v2/McFoamy_FM_v2.cpp)
+  add_library(McFAeroPlugin SHARED src/mcfaero_plugin/mcfaero_plugin.cpp
+                        src/mcfoamy_v2/mcfoamy_v3/McFoamy_FM_v3.cpp)
+  list(APPEND plugins McFAeroPlugin)
+
 #endif()
 
 foreach(plugin ${plugins})

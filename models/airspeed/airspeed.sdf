@@ -5,7 +5,7 @@
       <pose>0 0 0 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>0.015</mass>
+        <mass>0.005</mass>
         <inertia>
           <ixx>1e-05</ixx>
           <ixy>0</ixy>
